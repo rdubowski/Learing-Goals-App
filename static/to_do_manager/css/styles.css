@@ -7,3 +7,9 @@
     color: #ffffff;
     text-decoration: underline;
 }
+.card-header p{
+    font-size: 1.25rem;
+}
+.fa-pen-square {
+    font-size: 30px;
+}

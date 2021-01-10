@@ -3,8 +3,8 @@ body,
 html {
     margin: 0;
     padding: 0;
-    height: 100%;
     background: #b4a09e !important;
+    height: 100vh;
 }
 
 .user_card {

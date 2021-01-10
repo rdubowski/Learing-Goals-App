@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import LearningGoal, SingleTask
+from .models import LearningGoal, SingleTask, Profile
 
 class SingleTaskInline(admin.StackedInline):
     model = SingleTask
@@ -9,3 +9,4 @@ class LearningGoalAdmin(admin.ModelAdmin):
     inlines = [SingleTaskInline,]
 admin.site.register(LearningGoal, LearningGoalAdmin)
 admin.site.register(SingleTask)
+admin.site.register(Profile)

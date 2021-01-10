@@ -6,49 +6,24 @@
 </div>
 
 <div class="row">
+    {% for learninggoal in LearningGoals  %}
     <div class="col-3">
-        <div class="card mb-3" style="max-width: 18rem;">
-            <div class="card-header">Zadanie 1</div>
-            <div class="card-body">
-                <li>Nauczyc sie x i y</li>
-                <li>Nauczyc sie x i y</li>
-                <li>Nauczyc sie x i y</li>
+        <div class="card mb-2" style="max-width: 18rem;">
+            <div class="card-header d-flex justify-content-between">
+                <p class="mb-1">{{ learninggoal.name }}</p>
+                <a href="#"><i class="fas fa-pen-square"></i></a>
             </div>
-            <div class="card-footer text-muted">Last updated: ...</div>
+            <div class="card-body">
+                {%for single_task in learninggoal.tasks.all %}
+                <li>{{single_task}}</li>
+                {% endfor %}
+                <li>{{learninggoal.tasks.all.count}}/{{learninggoal.counter}}</li>
+            </div>
+            <div class="card-footer text-muted">Last updated: {{ learninggoal.updated_at| date:"d.m.Y" }}</div>
         </div>
     </div>
-    <div class="col-3">
-        <div class="card mb-3" style="max-width: 18rem;">
-            <div class="card-header">Zadanie 1</div>
-            <div class="card-body">
-                <li>Nauczyc sie x i y</li>
-                <li>Nauczyc sie x i y</li>
-                <li>Nauczyc sie x i y</li>
-            </div>
-            <div class="card-footer text-muted">Last updated: ...</div>
-        </div>
-    </div>
-    <div class="col-3">
-        <div class="card mb-3" style="max-width: 18rem;">
-            <div class="card-header">Zadanie 1</div>
-            <div class="card-body">
-                <li>Nauczyc sie x i y</li>
-                <li>Nauczyc sie x i y</li>
-                <li>Nauczyc sie x i y</li>
-            </div>
-            <div class="card-footer text-muted">Last updated: ...</div>
-        </div>
-    </div>
-    <div class="col-3">
-        <div class="card mb-3" style="max-width: 18rem;">
-            <div class="card-header">Zadanie 1</div>
-            <div class="card-body">
-                <li>Nauczyc sie x i y</li>
-                <li>Nauczyc sie x i y</li>
-                <li>Nauczyc sie x i y</li>
-            </div>
-            <div class="card-footer text-muted">Last updated: ...</div>
-        </div>
-    </div>
+    {% endfor %}
 </div>
+
+<a class="btn btn-success btn-lg mt-5" href="#" role="button">Add New</a>
 {% endblock content %}

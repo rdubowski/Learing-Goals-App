@@ -1,5 +1,6 @@
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a href="#"><img src="{% static 'to_do_manager/images/icon.png' %}" alt="logo" height="50" width="50"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
         aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -7,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Dasboard</a>
+                <a class="nav-link" href="#">Dashboard</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Products</a>
@@ -17,6 +18,6 @@
             </li>
         </ul>
     </div>
-    <span class="hello-msg">Hello, USERNAME</span>
-    <span><a class="hello-msg logout" href="#">Logout</a></span>
+    <span class="hello-msg mr-4">Hello, {{ request.user }}</span>
+    <span><a class="hello-msg logout " href="{% url 'logout' %}">Logout</a></span>
 </nav>

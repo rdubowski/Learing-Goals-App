@@ -1,0 +1,34 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>To do manager - DO POPRAWIENIA</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">To-do manager</h1>
+            <p class="lead">This is a simple app to manage your tasks. </p>
+            <img class="img-fluid" src="{%  static 'to_do_manager/images/image_welcome.svg' %}" alt="welcome image"
+                height="400" width="400">
+            <p>To start use app, you have to register or if you are
+                register user, you can login</p>
+
+            <p class="lead">
+                <a class="btn btn-primary btn-lg mr-2" href="{% url 'register' %}" role="button">Register</a>
+                <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Log in</a>
+            </p>
+        </div>
+        <script src="static/js/bootstrap.min.js"></script>
+    </div>
+</body>
+
+</html>

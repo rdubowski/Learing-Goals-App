@@ -11,7 +11,7 @@
         <div class="card mb-2" style="max-width: 18rem;">
             <div class="card-header d-flex justify-content-between">
                 <p class="mb-1">{{ learninggoal.name }}</p>
-                <a href="#"><i class="fas fa-pen-square"></i></a>
+                <a href="{% url 'tasks' learninggoal.pk %}"><i class="fas fa-pen-square"></i></a>
             </div>
             <div class="card-body">
                 {%for single_task in learninggoal.tasks.all %}
@@ -25,5 +25,5 @@
     {% endfor %}
 </div>
 
-<a class="btn btn-success btn-lg mt-5" href="#" role="button">Add New</a>
+<a class="btn btn-success btn-lg mt-5" href="{% url 'create_goal' %}" role="button">Add New</a>
 {% endblock content %}

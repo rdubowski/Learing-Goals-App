@@ -8,6 +8,7 @@ urlpatterns = [
     path('register/', views.registerPage, name='register'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('create_goal/', views.create_goal, name='create_goal'),
+    path('<int:id>/delete_goal/', views.delete_goal, name='delete_goal'),
     path('goal/<int:id>/tasks/', views.LearningGoalTasks, name='tasks'),
     # path('todo/<int:pk>', views.singleTodo, name='single-todo'),
     # path('add/', views.addTodo, name='add'),

@@ -31,17 +31,20 @@ def registerPage(request):
 
 
 def loginPage(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('dashboard')
-        else:
-            messages.info(request, 'Username OR password is incorrect')
-    context = {}
-    return render(request, 'to_do_manager/login.html', context)
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    else:
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('dashboard')
+            else:
+                messages.info(request, 'Username OR password is incorrect')
+        context = {}
+        return render(request, 'to_do_manager/login.html', context)
 
 def logoutPage(request):
     logout(request)
@@ -73,6 +76,18 @@ def create_goal(request):
     form = CreateGoalForm()
     context = {'form' :form}
     return render(request, 'single_goal/create_goal.html', context)
+
+@login_required(login_url='login')
+def delete_goal(request, id):
+    goal = LearningGoal.objects.get(id=id)
+    if request.method == "POST":
+        goal.delete()
+        return redirect('dashboard')
+    context = {'goal': goal}
+    return render(request, 'single_goal/delete_goal.html', context)
+
+
+
 
 
 @login_required(login_url='login')

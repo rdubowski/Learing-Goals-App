@@ -10,6 +10,18 @@
 .card-header p{
     font-size: 1.25rem;
 }
-.fa-pen-square {
-    font-size: 30px;
+.fa-pen-square, .fa-trash {
+    font-size: 26px;
+}
+.iconfo .fa-trash {
+    color: rgba(255, 0, 0, 0.609);
+}
+.iconfo:hover .fa-trash {
+    color: rgba(194, 3, 3, 0.664);
+}
+
+.btn-deleter {
+    width: 100%;
+    background: #ED564E!important;
+    color: white !important;
 }

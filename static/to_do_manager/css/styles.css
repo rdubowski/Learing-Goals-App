@@ -25,3 +25,6 @@
     background: #ED564E!important;
     color: white !important;
 }
+#taskCard:hover {
+    cursor: pointer;
+}

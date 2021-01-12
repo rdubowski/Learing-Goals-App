@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import LearningGoal, SingleTask
 from django.db.models import Prefetch, Count
 from django.contrib import messages
-from .forms import CreateUserForm, CreateGoalForm, CreateSingleTask
+from .forms import CreateUserForm, CreateGoalForm, SingleTaskForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-# Create your views here.
-
+from django.views.generic import View, TemplateView
+from django.http import JsonResponse
+from django.forms.models import model_to_dict
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def welcome_screen(request):
@@ -78,8 +80,8 @@ def create_goal(request):
     return render(request, 'single_goal/create_goal.html', context)
 
 @login_required(login_url='login')
-def delete_goal(request, id):
-    goal = LearningGoal.objects.get(id=id)
+def delete_goal(request, pk):
+    goal = LearningGoal.objects.get(id=pk)
     if request.method == "POST":
         goal.delete()
         return redirect('dashboard')
@@ -90,27 +92,62 @@ def delete_goal(request, id):
 
 
 
-@login_required(login_url='login')
-def LearningGoalTasks(request, id):
-    tasks = LearningGoal.objects.get(id=id).tasks.all().order_by('completed')
-    form = CreateSingleTask()
-    context = {'tasks': tasks, 'form': form}
-    return render(request, 'single_goal/create_tasks.html', context)
 
+# def LearningGoalTasks(request, id):
+#     tasks = LearningGoal.objects.get(id=id).tasks.all()
+#     form = CreateSingleTask()
+#     context = {'tasks': tasks, 'form': form}
+#     return render(request, 'single_goal/create_tasks.html', context)
 
+# class TaskList(LoginRequiredMixin, TemplateView):
+#     def get(self, request, *args, **kwargs):
+#         form = SingleTaskForm()
+#         tasks = LearningGoal.objects.get(id=2).tasks.all()
+#         context = {'form' : form, 'tasks' : tasks}
+#         return render (request, 'single_goal/create_tasks.html', context)
 
-
-# def updateOrder(request, pk):
-#     order = Order.objects.get(id=pk)
-#     form = OrderForm(instance=order)
-#     print('ORDER:', order)
-#     if request.method == 'POST':
-
-#         form = OrderForm(request.POST, instance=order)
+#     def post(self,request):
+#         form = SingleTaskForm(request.POST)
 #         if form.is_valid():
-#             form.save()
-#             return redirect('/')
+#             new_task = SingleTask()
+#             new_task.text = form.cleaned_data['text']
+#             new_task.learninggoal = LearningGoal.objects.get(id=1)
+#             new_task.save()
+#             return JsonResponse({'task': model_to_dict(new_task)}, status=200)
+#         else:
+#             return redirect('task_list_url')
 
-#     context = {'form': form}
-#     return render(request, 'accounts/order_form.html', context)
+def learningGoalTasks(request, pk):
+    learning_goal = LearningGoal.objects.get(id=pk)
+    if request.method == "POST":
+        form = SingleTaskForm(request.POST)
+        if form.is_valid():
+            new_task = SingleTask()
+            new_task.text = form.cleaned_data['text']
+            new_task.learninggoal = learning_goal
+            new_task.save()
+            return JsonResponse({'task': model_to_dict(new_task)}, status=200)
+        else:
+            return redirect('task_list_url')
+    else:
+        form = SingleTaskForm()
+        tasks = learning_goal.tasks.all()
+        context = {'form' : form, 'tasks' : tasks, 'learning_goal': learning_goal}
+        return render (request, 'single_goal/create_tasks.html', context)
+
+
+
+
+class TaskComplete(View):
+    def post(self, request, id):
+        task = SingleTask.objects.get(id=id)
+        task.completed = True
+        task.save()
+        return JsonResponse({'task': model_to_dict(task)}, status=200)
+
+class TaskDelete(View):
+    def post(self, request, id):
+        task = SingleTask.objects.get(id=id)
+        task.delete()
+        return JsonResponse({'result': 'ok'}, status=200)
 

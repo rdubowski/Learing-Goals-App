@@ -1,67 +1,30 @@
-{% load static %}
-{% load widget_tweaks %}
-<!DOCTYPE html>
-<html lang="en">
+{% extends "to_do_manager/base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+	<div class="col-8 mt-5">
+		<form class="form-inline justify-content-center" action="" method="POST" id="createTaskForm"
+			data-url="{% url 'task_list_url' learning_goal.pk %}">
+			{% csrf_token %}
+			{% for field in form%}
+			<div class="row">
+				{{field}}
+			</div>
+			{% endfor %}
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-		integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<link rel="stylesheet" href="{% static 'to_do_manager/css/panel-styles.css' %}">
-	<title>Single to do DOPISZ TOOOOO</title>
-</head>
-
-<body>
-	<div class="container-fluid" id="wrapper">
-
-		<div class="row mt-5">
-			<div class="col-4 offset-4" id="content">
-				<h2 class="my-4">WHAT DO YOU WANT TO DO TODAY?</h2>
-
-				<form action="" method="POST" role="form">
-					{% csrf_token %}
-					<div class="form-row  my-2">
-						<div class="form-group col-12">
-							<div class="input-group">
-								{% comment %}
-								{{ form.text|attr:"autofocus"|add_class:"form-control"|attr:"placeholder:Enter your todo"}}
-								{% endcomment %}
-								<button type="submit" class="btn btn-success ml-2 ">ADD</button>
-							</div>
-						</div>
-						<div class="form-group col-12">
-							<div class="input-group d-flex justify-content-around">
-
-								<a href="#" type="submit" class="btn btn-warning"><i class="fa fa-trash"
-										aria-hidden="true"></i> SELECTED</a>
-								<a href="#" type="submit" class="btn btn-warning"><i class="fa fa-trash"
-										aria-hidden="true"></i> ALL</a>
-							</div>
-						</div>
-				</form>
-
-				<ul class="list-group col-12">
-					{% for task in tasks %}
-					{% if task.completed %}
-					<a class="disabled-link" href="#">
-						<li class="list-group-item todo-completed">{{ task.text }}</li>
-					</a>
-					{% else %}
-					<a class="disabled-link" href="#">
-						<li class="list-group-item">{{ task.text }}</li>
-					</a>
-					{% endif %}
-					{% endfor %}
-				</ul>
+			<button type="button" name="button" class="btn btn-outline-success" id="createButton">Create</button>
+		</form>
+	</div>
+	<div class="col-8 mt-5" id="taskList">
+		{% for task in tasks  %}
+		<div class="card mb-1" id="taskCard" data-id="{{task.id}}"
+			style="{% if task.completed %} text-decoration: line-through {% endif %}">
+			<div class="card-body">{{ task.text }}
+				<button class="close float-right" type="button" data-id="{{task.id}}">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
 		</div>
+		{% endfor %}
 	</div>
-
-
-
-	<!-- Bootstrap JavaScript -->
-	<script src="static/js/bootstrap.min.js"></script>
-</body>
-
-</html>
+</div>
+{% endblock content %}

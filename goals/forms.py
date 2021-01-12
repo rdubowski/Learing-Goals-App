@@ -13,7 +13,11 @@ class CreateGoalForm(forms.ModelForm):
         model = LearningGoal
         fields = ['name']
 
-class CreateSingleTask(forms.ModelForm):
+class SingleTaskForm(forms.ModelForm):
      class Meta:
         model = SingleTask
         fields = ['text']
+
+        widgets = {
+            'title' : forms.TextInput(attrs={'class' : 'form-control'})
+        }

@@ -7,15 +7,18 @@
 
 <div class="row">
     {% for learninggoal in LearningGoals  %}
-    <div class="col-3">
+    <div class="col-3 col-sm-auto">
         <div class="card mb-2" style="max-width: 18rem;">
-            <div class="card-header d-flex">
+            <div class="card-header d-flex justify-content-between">
                 <p class="mb-1">{{ learninggoal.name }}</p>
-                <a href="{% url 'tasks' learninggoal.pk %}" class="iconfo mx-2 my-0"><i
-                        class="fas fa-pen-square"></i></a>
-                <a href="{% url 'delete_goal' learninggoal.pk %}" class="iconfo"><i class="fas fa-trash"></i></a>
+                <div>
+                    <a href="{% url 'task_list_url' pk=learninggoal.pk %}" class="iconfo mx-2 my-0"><i
+                            class="fas fa-pen-square"></i></a>
+                    <a href="{% url 'delete_goal' learninggoal.pk %}" class="iconfo"><i class="fas fa-trash"></i></a>
+                </div>
             </div>
             <div class="card-body">
+                <p>Task to do</p>
                 {%for single_task in learninggoal.tasks.all %}
                 <li>{{single_task}}</li>
                 {% endfor %}

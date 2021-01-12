@@ -73,14 +73,13 @@ def create_goal(request):
             new_learning_goal.name = form.cleaned_data['name']
             new_learning_goal.user = user
             new_learning_goal.save()
-            print(new_learning_goal)
             return redirect('dashboard')
     form = CreateGoalForm()
     context = {'form' :form}
     return render(request, 'single_goal/create_goal.html', context)
 
 @login_required(login_url='login')
-def delete_goal(request, pk):
+def deleteGoal(request, pk):
     goal = LearningGoal.objects.get(id=pk)
     if request.method == "POST":
         goal.delete()
@@ -88,6 +87,16 @@ def delete_goal(request, pk):
     context = {'goal': goal}
     return render(request, 'single_goal/delete_goal.html', context)
 
+
+@login_required(login_url='login')
+def changeGoalName(request, pk):
+    learning_goal = get_object_or_404(LearningGoal, id=pk)
+    form = CreateGoalForm(request.POST or None, instance=learning_goal)
+    if form.is_valid():
+        form.save()
+        return redirect('dashboard')
+    context = {'form' :form, 'learninggoal': learning_goal}
+    return render(request, 'single_goal/change_goal_name.html', context)
 
 
 
@@ -117,6 +126,8 @@ def delete_goal(request, pk):
 #         else:
 #             return redirect('task_list_url')
 
+
+@login_required(login_url='login')
 def learningGoalTasks(request, pk):
     learning_goal = LearningGoal.objects.get(id=pk)
     if request.method == "POST":
@@ -138,15 +149,18 @@ def learningGoalTasks(request, pk):
 
 
 
-class TaskComplete(View):
-    def post(self, request, id):
+@login_required(login_url='login')
+def TaskComplete(request, id):
+   if request.method == "POST":
         task = SingleTask.objects.get(id=id)
         task.completed = True
         task.save()
         return JsonResponse({'task': model_to_dict(task)}, status=200)
 
-class TaskDelete(View):
-    def post(self, request, id):
+
+@login_required(login_url='login')
+def TaskDelete(request, id):
+    if request.method == "POST":
         task = SingleTask.objects.get(id=id)
         task.delete()
         return JsonResponse({'result': 'ok'}, status=200)

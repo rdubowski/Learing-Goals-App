@@ -1,4 +1,3 @@
-console.log('czes')
 $(document).ready(function() {
 
     var csrfToken = $("input[name=csrfmiddlewaretoken]").val();

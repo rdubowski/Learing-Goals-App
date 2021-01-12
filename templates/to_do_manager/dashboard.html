@@ -14,6 +14,8 @@
                 <div>
                     <a href="{% url 'task_list_url' pk=learninggoal.pk %}" class="iconfo mx-2 my-0"><i
                             class="fas fa-pen-square"></i></a>
+                    <a href="{% url 'change_goal_name' learninggoal.pk %}" class="iconfo mx-2 my-0"><i
+                            class="fas fa-pen-square"></i></a>
                     <a href="{% url 'delete_goal' learninggoal.pk %}" class="iconfo"><i class="fas fa-trash"></i></a>
                 </div>
             </div>

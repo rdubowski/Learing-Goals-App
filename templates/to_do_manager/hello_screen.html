@@ -1,5 +1,4 @@
 {% load static %}
-{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,23 +12,29 @@
     </script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
         integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'to_do_manager/css/welcome_screen.css' %}">
     <title>To do manager - DO POPRAWIENIA</title>
 </head>
 
 <body>
-    <div class="container">
-        <div class="jumbotron text-center">
-            <h1 class="display-4">To-do manager</h1>
-            <p class="lead">This is a simple app to manage your tasks. </p>
-            <img class="img-fluid" src="{%  static 'to_do_manager/images/image_welcome.svg' %}" alt="welcome image"
-                height="400" width="400">
-            <p>To start use app, you have to register or if you are
-                register user, you can login</p>
+    <div class="container h-100">
+        <div class="d-flex justify-content-center h-100">
+            <div class="welcome_screen">
+                <div class="d-flex align-items-center flex-column center mt-3">
 
-            <p class="lead">
-                <a class="btn btn-primary btn-lg mr-2" href="{% url 'register' %}" role="button">Register</a>
-                <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Log in</a>
-            </p>
+                    <h1 class="display-4">To-do manager</h1>
+                    <p class="lead">This is a simple app to manage your tasks. </p>
+                    <img class="img-fluid" src="{%  static 'to_do_manager/images/image_welcome.svg' %}"
+                        alt="welcome image" height="400" width="400">
+                    <p>To start use app, you have to register or if you are
+                        register user, you can login</p>
+
+                    <p class="lead">
+                        <a class="btn btn-primary btn-lg mr-2" href="{% url 'register' %}" role="button">Register</a>
+                        <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Log in</a>
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </body>

@@ -1,30 +1,49 @@
 {% extends "to_do_manager/base.html" %}
 {% block content %}
-<div class="row my-5">
+{% load mathfilters %}
+<div class="row mt-5">
     <h1 class="col-12 text-center">Your learning goals</h1>
-    <a class="col-12 text-center" href="#">See all in a table</a></h1>
+    <a class="col-12 text-center table-link mb-3" href="#">See all in a table</a></h1>
 </div>
 
 <div class="row">
     {% for learninggoal in LearningGoals  %}
     <div class="col-3 col-sm-auto">
-        <div class="card mb-2" style="max-width: 18rem;">
+        <div class="card mb-2">
             <div class="card-header d-flex justify-content-between">
-                <p class="mb-1">{{ learninggoal.name }}</p>
                 <div>
+                    <p class="mb-0 text-left">{{ learninggoal.name }}</p>
+                    <a href="{% url 'change_goal_name' learninggoal.pk %}" class="change-link">Change name</a>
+                </div>
+                <div class="pt-2">
                     <a href="{% url 'task_list_url' pk=learninggoal.pk %}" class="iconfo mx-2 my-0"><i
                             class="fas fa-pen-square"></i></a>
-                    <a href="{% url 'change_goal_name' learninggoal.pk %}" class="iconfo mx-2 my-0"><i
-                            class="fas fa-pen-square"></i></a>
+
                     <a href="{% url 'delete_goal' learninggoal.pk %}" class="iconfo"><i class="fas fa-trash"></i></a>
                 </div>
             </div>
             <div class="card-body">
-                <p>Task to do</p>
+                <p class="my-2">Task to do:</p>
                 {%for single_task in learninggoal.tasks.all %}
                 <li>{{single_task}}</li>
                 {% endfor %}
-                <li>{{learninggoal.tasks.all.count}}/{{learninggoal.counter}}</li>
+
+                {% if learninggoal.counter %}
+
+                {% with numerator=learninggoal.tasks.all.count x=1 denominator=learninggoal.counter|default_if_none:1 %}
+                <div class="" d-flex align-items-center flex-column"">
+                    <p class="mb-0 mt-2 text-center">Your progress</p>
+                    <div class="progress my-2">
+                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                            style="width: {{ denominator|sub:numerator|div:denominator|mul:100 }}%"
+                            aria-valuenow="{{ denominator|sub:numerator|div:denominator|mul:100 }}" aria-valuemin="0"
+                            aria-valuemax="100">
+                        </div>
+                    </div>
+                </div>
+                {% endwith %}
+                {% comment %}<li>{{learninggoal.tasks.all.count}}/{{learninggoal.counter}}</li>{% endcomment %}
+                {% endif %}
             </div>
             <div class="card-footer text-muted">Last updated: {{ learninggoal.updated_at| date:"d.m.Y" }}</div>
         </div>

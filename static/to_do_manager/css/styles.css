@@ -11,7 +11,7 @@
     font-size: 1.25rem;
 }
 .fa-pen-square, .fa-trash {
-    font-size: 26px;
+    font-size: 2rem;
 }
 .iconfo .fa-trash {
     color: rgba(255, 0, 0, 0.609);
@@ -28,3 +28,23 @@
 #taskCard:hover {
     cursor: pointer;
 }
+.change-link {
+    color: inherit;
+    font-size: 0.725rem;
+    margin: 0;
+    padding: 0;
+}
+.change-link:hover {
+    color: inherit
+}
+.table-link {
+    color: inherit;
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+.table-link:hover {
+    color: inherit
+}
+
+

@@ -57,8 +57,8 @@ def logoutPage(request):
 def dashboard(request):
     template_name = 'to_do_manager/dashboard.html'
     LearningGoals = request.user.learninggoal_set.prefetch_related(
-        Prefetch('tasks', queryset=SingleTask.objects.filter(completed=False))).annotate(
-        counter=Count('tasks')).order_by('-updated_at')
+         Prefetch('tasks', queryset=SingleTask.objects.filter(completed=False))).annotate(
+         counter=Count('tasks')).order_by('-updated_at')
     context = {'LearningGoals': LearningGoals}
     return render(request, template_name, context)
 

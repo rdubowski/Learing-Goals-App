@@ -3,7 +3,7 @@ body,
 html {
     margin: 0;
     padding: 0;
-    background: rgb(210, 233, 255) !important;
+    background:rgb(142, 198, 250) !important;
     height: 100vh;
 }
 
@@ -11,7 +11,7 @@ html {
     width: 350px;
     margin-top: auto;
     margin-bottom: auto;
-    background: rgb(142, 198, 250);
+    background: rgb(210, 233, 255);
     position: relative;
     display: flex;
     justify-content: center;
@@ -86,12 +86,4 @@ html {
     -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
 
-}
-
-.form-control:focus {
-    color: #495057;
-    background-color: #fff;
-    border-color: #fff;
-    outline: 0;
-    box-shadow: none;
 }

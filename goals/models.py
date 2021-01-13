@@ -26,6 +26,8 @@ class SingleTask(models.Model):
     text = models.CharField(blank=True, max_length=40)
     learninggoal = models.ForeignKey(LearningGoal, on_delete=models.CASCADE, related_name='tasks')
     completed = models.BooleanField(default=False)
+    
+
 
     def __str__(self):
         return self.text

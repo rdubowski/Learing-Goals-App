@@ -1,3 +1,6 @@
+
+
+
 $(document).ready(function() {
 
     var csrfToken = $("input[name=csrfmiddlewaretoken]").val();
@@ -52,3 +55,12 @@ $(document).ready(function() {
         });
     });
 });
+$(document).on('keypress', function(e) {
+    var keyCode = e.keyCode || e.which;
+    if (keyCode === 13) { 
+      e.preventDefault();
+      $("#createButton").click()
+      return false
+    }
+  });
+  

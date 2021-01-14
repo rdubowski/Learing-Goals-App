@@ -9,6 +9,7 @@ from django.views.generic import View, TemplateView
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 
 
 def welcome_screen(request):
@@ -59,7 +60,10 @@ def dashboard(request):
     LearningGoals = request.user.learninggoal_set.prefetch_related(
          Prefetch('tasks', queryset=SingleTask.objects.filter(completed=False))).annotate(
          counter=Count('tasks')).order_by('-updated_at')
-    context = {'LearningGoals': LearningGoals}
+    paginator = Paginator(LearningGoals, 2)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {'page_obj': page_obj}
     return render(request, template_name, context)
 
 
@@ -162,6 +166,7 @@ def TaskComplete(request, id):
 def TaskDelete(request, id):
     if request.method == "POST":
         task = SingleTask.objects.get(id=id)
+        #task.learninggoal()
         task.delete()
         return JsonResponse({'result': 'ok'}, status=200)
 

@@ -7,7 +7,7 @@
 </div>
 
 <div class="row">
-    {% for learninggoal in LearningGoals  %}
+    {% for learninggoal in page_obj  %}
     <div class="col-3 col-sm-auto">
         <div class="card mb-2">
             <div class="card-header d-flex justify-content-between">
@@ -23,12 +23,13 @@
                 </div>
             </div>
             <div class="card-body">
+                {% if learninggoal.counter %}
                 <p class="my-2">Task to do:</p>
                 {%for single_task in learninggoal.tasks.all %}
                 <li>{{single_task}}</li>
                 {% endfor %}
 
-                {% if learninggoal.counter %}
+
 
                 {% with numerator=learninggoal.tasks.all.count x=1 denominator=learninggoal.counter|default_if_none:1 %}
                 <div class="" d-flex align-items-center flex-column"">
@@ -43,6 +44,8 @@
                 </div>
                 {% endwith %}
                 {% comment %}<li>{{learninggoal.tasks.all.count}}/{{learninggoal.counter}}</li>{% endcomment %}
+                {% else %}
+                <a href="{% url 'task_list_url' pk=learninggoal.pk %}" class="change-link add">Add new goal</a>
                 {% endif %}
             </div>
             <div class="card-footer text-muted">Last updated: {{ learninggoal.updated_at| date:"d.m.Y" }}</div>
@@ -50,6 +53,23 @@
     </div>
     {% endfor %}
 </div>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
 
-<a class="btn btn-success btn-lg mt-5" href="{% url 'create_goal' %}" role="button">Add New</a>
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+<a class="btn btn-success btn-lg mt-3" href="{% url 'create_goal' %}" role="button">Add New</a>
 {% endblock content %}

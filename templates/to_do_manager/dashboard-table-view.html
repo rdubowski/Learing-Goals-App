@@ -5,5 +5,50 @@
     <h1 class="col-12 text-center">Your learning goals</h1>
     <a class="col-12 text-center table-link mb-3" href="{% url 'dashboard' %}">See all in classic view</a></h1>
 </div>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th class="text-center" scope="col">#</th>
+            <th class="text-center" scope="col">Goals Name</th>
+            <th class="text-center" scope="col">Tasks All</th>
+            <th class="text-center" scope="col">Tasks Left</th>
+            <th class="text-center" scope="col">Task Done</th>
+            <th class="text-center" scope="col">Progressbar</th>
+            <th class="text-center" scope="col">Last updated on:</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for learninggoal in LearningGoals  %}
 
+        <tr class='table-light'>
+            <th class="text-center" scope="row">{{forloop.counter}}</th>
+            <td class="text-center">{{ learninggoal.name }}</td>
+            <td class="text-center">{{learninggoal.counter}}</td>
+            <td class="text-center">{{learninggoal.tasks.all.count}}</td>
+            {% with numerator=learninggoal.tasks.all.count denominator=learninggoal.counter %}
+            <td class="text-center"> {{denominator|sub:numerator}}</td>
+            <td class="text-center">
+                {%if learninggoal.counter %}
+                <div class="progress my-2">
+                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                        style="width: {{ denominator|sub:numerator|div:denominator|mul:100 }}%"
+                        aria-valuenow="{{ denominator|sub:numerator|div:denominator|mul:100 }}" aria-valuemin="0"
+                        aria-valuemax="100">
+                    </div>
+                </div>
+                {% else %}
+                <div class="progress my-2">
+                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 0%"
+                        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    </div>
+                </div>
+                {% endif %}
+                {% endwith %}
+            </td>
+            <td class="text-center">{{ learninggoal.updated_at| date:"G:i M.j, Y" }}</td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
 {% endblock content %}

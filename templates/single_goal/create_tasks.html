@@ -20,9 +20,9 @@
 			</div>
 			</form>
 		</div>
-		<div class="col-12 my-4" id="taskList">
+		<div class="col-12 my-4 task_list" id="taskList">
 			{% for task in tasks  %}
-			<div class="card mb-1" id="taskCard" data-id="{{task.id}}"
+			<div class="card mb-1 task_card" id="taskCard" data-id="{{task.id}}"
 				style="{% if task.completed %} text-decoration: line-through {% endif %}">
 				<div class="card-body">{{ task.text }}
 					<button class="close float-right" type="button" data-id="{{task.id}}">

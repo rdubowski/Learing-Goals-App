@@ -60,11 +60,25 @@ def dashboard(request):
     LearningGoals = request.user.learninggoal_set.prefetch_related(
          Prefetch('tasks', queryset=SingleTask.objects.filter(completed=False))).annotate(
          counter=Count('tasks')).order_by('-updated_at')
-    paginator = Paginator(LearningGoals, 2)
+    paginator = Paginator(LearningGoals, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {'page_obj': page_obj}
     return render(request, template_name, context)
+
+@login_required(login_url='login')
+def dashboard_table(request):
+    template_name = 'to_do_manager/dashboard-table-view.html'
+    LearningGoals = request.user.learninggoal_set.prefetch_related(
+         Prefetch('tasks', queryset=SingleTask.objects.filter(completed=False))).annotate(
+         counter=Count('tasks')).order_by('-updated_at')
+    TasksAll = SingleTask.objects.all()
+    TasksAller = TasksAll.count()
+    TasksCompleted = TasksAll.filter(completed=True).count()
+    TasksUncompleted = TasksAll.filter(completed=False).count()
+    context = {'LearningGoals':LearningGoals, 'TasksAll':TasksAller, 'TasksCompleted': TasksCompleted, 'TasksUncompleted': TasksUncompleted}
+    return render(request, template_name, context)
+
 
 
 @login_required(login_url='login')

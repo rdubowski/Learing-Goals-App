@@ -34,8 +34,7 @@ $(document).ready(function() {
             type: 'post',
             success: function() {
                 var cardItem = $('#taskCard[data-id="' + dataId + '"]');
-                cardItem.css('text-decoration', 'line-through').hide().slideDown();
-                $("#taskList").append(cardItem);
+                cardItem.css('text-decoration', 'line-through')
             }
         });
     }).on('click', 'button.close', function(event) {

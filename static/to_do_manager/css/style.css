@@ -6,7 +6,9 @@ html {
     background: rgb(210, 233, 255) !important;
     height: 100vh;
 }
-
+.container {
+    height: 80vh !important;
+    }
 .user_card {
     width: 350px;
     margin-top: auto;
@@ -22,6 +24,9 @@ html {
     -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
 
+}
+.user_card.pass {
+    width: 500px;
 }
 .creating-goal {
     width: 500px;
@@ -94,4 +99,66 @@ html {
     border-color: #fff;
     outline: 0;
     box-shadow: none;
+}
+.hello-msg {
+    font-size: 18px;
+    color: #ffffff;
+    margin: 0 20px 0 0;
+}
+.logout:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+.card-header p{
+    font-size: 1.25rem;
+}
+.fa-pen-square, .fa-trash {
+    font-size: 1.5rem;
+}
+.iconfo .fa-trash {
+    color: rgba(255, 0, 0, 0.609);
+}
+.iconfo:hover .fa-trash {
+    color: rgba(194, 3, 3, 0.664);
+}
+
+.btn-deleter {
+    width: 100%;
+    background: #ED564E!important;
+    color: white !important;
+}
+#taskCard:hover {
+    cursor: pointer;
+}
+.change-link {
+    color: inherit;
+    font-size: 0.725rem;
+    margin: 0;
+    padding: 0;
+}
+.change-link:hover {
+    color: inherit
+}
+.change-link, .add {
+    font-size: 1rem;
+}
+.table-link {
+    color: inherit;
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+.table-link:hover {
+    color: inherit
+}
+.table .thead-dark th {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+}
+.arrow-page {
+    font-size: 2.125rem;
+}
+.task_list {
+    font-size: 1.5rem;
 }

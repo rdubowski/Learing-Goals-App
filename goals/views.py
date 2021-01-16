@@ -5,10 +5,8 @@ from django.contrib import messages
 from .forms import CreateUserForm, CreateGoalForm, SingleTaskForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.views.generic import View, TemplateView
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 
 
@@ -17,12 +15,12 @@ def welcome_screen(request):
     return render(request, 'to_do_manager/hello_screen.html', context)
 
 
-def registerPage(request):
+def register_page(request):
     form = CreateUserForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            form.save()
             username = form.cleaned_data.get('username')
 
             messages.success(request, 'Account was created for ' + username)
@@ -33,7 +31,7 @@ def registerPage(request):
     return render(request, 'to_do_manager/register.html', context)
 
 
-def loginPage(request):
+def login_page(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
     else:
@@ -49,7 +47,8 @@ def loginPage(request):
         context = {}
         return render(request, 'to_do_manager/login.html', context)
 
-def logoutPage(request):
+
+def logout_page(request):
     logout(request)
     return redirect('login')
 
@@ -58,27 +57,34 @@ def logoutPage(request):
 def dashboard(request):
     template_name = 'to_do_manager/dashboard.html'
     LearningGoals = request.user.learninggoal_set.prefetch_related(
-         Prefetch('tasks', queryset=SingleTask.objects.filter(completed=False))).annotate(
-         counter=Count('tasks')).order_by('-updated_at')
+         Prefetch('tasks',
+                  queryset=SingleTask.objects.filter(completed=False))
+                                                                 ).annotate(
+                  counter=Count('tasks')).order_by('-updated_at')
     paginator = Paginator(LearningGoals, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {'page_obj': page_obj}
     return render(request, template_name, context)
 
+
 @login_required(login_url='login')
 def dashboard_table(request):
     template_name = 'to_do_manager/dashboard-table-view.html'
     LearningGoals = request.user.learninggoal_set.prefetch_related(
-         Prefetch('tasks', queryset=SingleTask.objects.filter(completed=False))).annotate(
-         counter=Count('tasks')).order_by('-updated_at')
+         Prefetch('tasks',
+                  queryset=SingleTask.objects.filter(completed=False))
+                                                                 ).annotate(
+                  counter=Count('tasks')).order_by('-updated_at')
     TasksAll = SingleTask.objects.all()
     TasksAller = TasksAll.count()
     TasksCompleted = TasksAll.filter(completed=True).count()
     TasksUncompleted = TasksAll.filter(completed=False).count()
-    context = {'LearningGoals':LearningGoals, 'TasksAll':TasksAller, 'TasksCompleted': TasksCompleted, 'TasksUncompleted': TasksUncompleted}
+    context = {'LearningGoals': LearningGoals,
+               'TasksAll': TasksAller,
+               'TasksCompleted': TasksCompleted,
+               'TasksUncompleted': TasksUncompleted}
     return render(request, template_name, context)
-
 
 
 @login_required(login_url='login')
@@ -93,12 +99,13 @@ def create_goal(request):
             new_learning_goal.save()
             return redirect('dashboard')
     form = CreateGoalForm()
-    context = {'form' :form}
+    context = {'form': form}
     return render(request, 'single_goal/create_goal.html', context)
 
+
 @login_required(login_url='login')
-def deleteGoal(request, pk):
-    goal = LearningGoal.objects.get(id=pk)
+def delete_goal(request, pk):
+    goal = get_object_or_404(LearningGoal, id=pk)
     if request.method == "POST":
         goal.delete()
         return redirect('dashboard')
@@ -107,47 +114,19 @@ def deleteGoal(request, pk):
 
 
 @login_required(login_url='login')
-def changeGoalName(request, pk):
+def change_goal_name(request, pk):
     learning_goal = get_object_or_404(LearningGoal, id=pk)
     form = CreateGoalForm(request.POST or None, instance=learning_goal)
     if form.is_valid():
         form.save()
         return redirect('dashboard')
-    context = {'form' :form, 'learninggoal': learning_goal}
+    context = {'form': form, 'learninggoal': learning_goal}
     return render(request, 'single_goal/change_goal_name.html', context)
 
 
-
-
-
-# def LearningGoalTasks(request, id):
-#     tasks = LearningGoal.objects.get(id=id).tasks.all()
-#     form = CreateSingleTask()
-#     context = {'tasks': tasks, 'form': form}
-#     return render(request, 'single_goal/create_tasks.html', context)
-
-# class TaskList(LoginRequiredMixin, TemplateView):
-#     def get(self, request, *args, **kwargs):
-#         form = SingleTaskForm()
-#         tasks = LearningGoal.objects.get(id=2).tasks.all()
-#         context = {'form' : form, 'tasks' : tasks}
-#         return render (request, 'single_goal/create_tasks.html', context)
-
-#     def post(self,request):
-#         form = SingleTaskForm(request.POST)
-#         if form.is_valid():
-#             new_task = SingleTask()
-#             new_task.text = form.cleaned_data['text']
-#             new_task.learninggoal = LearningGoal.objects.get(id=1)
-#             new_task.save()
-#             return JsonResponse({'task': model_to_dict(new_task)}, status=200)
-#         else:
-#             return redirect('task_list_url')
-
-
 @login_required(login_url='login')
-def learningGoalTasks(request, pk):
-    learning_goal = LearningGoal.objects.get(id=pk)
+def learning_goal_tasks(request, pk):
+    learning_goal = get_object_or_404(LearningGoal, id=pk)
     if request.method == "POST":
         form = SingleTaskForm(request.POST)
         if form.is_valid():
@@ -161,15 +140,15 @@ def learningGoalTasks(request, pk):
     else:
         form = SingleTaskForm()
         tasks = learning_goal.tasks.all()
-        context = {'form' : form, 'tasks' : tasks, 'learning_goal': learning_goal}
-        return render (request, 'single_goal/create_tasks.html', context)
-
-
+        context = {'form': form,
+                   'tasks': tasks,
+                   'learning_goal': learning_goal}
+        return render(request, 'single_goal/create_tasks.html', context)
 
 
 @login_required(login_url='login')
-def TaskComplete(request, id):
-   if request.method == "POST":
+def task_complete(request, id):
+    if request.method == "POST":
         task = SingleTask.objects.get(id=id)
         task.completed = True
         task.save()
@@ -177,10 +156,8 @@ def TaskComplete(request, id):
 
 
 @login_required(login_url='login')
-def TaskDelete(request, id):
+def task_delete(request, id):
     if request.method == "POST":
         task = SingleTask.objects.get(id=id)
-        #task.learninggoal()
         task.delete()
         return JsonResponse({'result': 'ok'}, status=200)
-

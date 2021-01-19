@@ -11,24 +11,30 @@ from django.core.paginator import Paginator
 
 
 def welcome_screen(request):
-    context = {}
-    return render(request, 'to_do_manager/hello_screen.html', context)
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    else:
+        context = {}
+        return render(request, 'to_do_manager/hello_screen.html', context)
 
 
 def register_page(request):
-    form = CreateUserForm()
-    if request.method == 'POST':
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    else:
+        form = CreateUserForm()
+        if request.method == 'POST':
+            form = CreateUserForm(request.POST)
+            if form.is_valid():
+                form.save()
+                username = form.cleaned_data.get('username')
 
-            messages.success(request, 'Account was created for ' + username)
+                messages.success(request, 'Account was created for ' + username)
 
-            return redirect('login')
+                return redirect('login')
 
-    context = {'form': form}
-    return render(request, 'to_do_manager/register.html', context)
+        context = {'form': form}
+        return render(request, 'to_do_manager/register.html', context)
 
 
 def login_page(request):

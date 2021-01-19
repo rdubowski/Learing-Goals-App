@@ -1,6 +1,6 @@
 [run]
+include = goals/*
 omit = 
 	*apps.py,
 	*migrations/*,
 	*tests/*,
-    *.local/*

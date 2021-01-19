@@ -13,6 +13,8 @@ pytest-django = "*"
 factory-boy = "*"
 pytest = "*"
 pytest-cov = "*"
+mixer = "*"
+django-test-plus = "*"
 
 [dev-packages]
 

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "badc783fe2a40b6d073e1ca17794e66c65f89de57fe5985294e5148d8964b732"
+            "sha256": "abae22afbe89aa2940ee2dc3d40e34c7851b5cdb829751ec2045beb65429372d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -93,11 +93,11 @@
         },
         "django": {
             "hashes": [
-                "sha256:2d78425ba74c7a1a74b196058b261b9733a8570782f4e2828974777ccca7edf7",
-                "sha256:efa2ab96b33b20c2182db93147a0c3cd7769d418926f9e9f140a60dca7c64ca9"
+                "sha256:ace5a4cb96e9344537d71a72607764486994d23099166b70c32bb9e8242b9ef1",
+                "sha256:f6b99ef95aa0c5bf51ef0e469f19c21486966c9dce5b2ab5037763dc89a127f0"
             ],
             "index": "pypi",
-            "version": "==3.1.5"
+            "version": "==3.2a1"
         },
         "django-mathfilters": {
             "hashes": [
@@ -106,6 +106,13 @@
             ],
             "index": "pypi",
             "version": "==1.0.0"
+        },
+        "django-test-plus": {
+            "hashes": [
+                "sha256:9c3ca75f9ebb0b72d0a16e98b6d80e94b3d0ff007be5fc946d16b423b808bf16"
+            ],
+            "index": "pypi",
+            "version": "==1.4.0"
         },
         "django-widget-tweaks": {
             "hashes": [
@@ -125,10 +132,10 @@
         },
         "faker": {
             "hashes": [
-                "sha256:818cce31afc6482d8371df783a282b025acc464e7e03d743eb4645c2bf33e3c8",
-                "sha256:e4d981700628a6c428372c3664f22f8e85cd42199bb47434a0c0785176a8efa5"
+                "sha256:23c9855bdf22435a528472dc5749b65069e5b1807d7a9bc6dde5865763243859",
+                "sha256:eb1625d72ad8f59984bea3ec25b6b56c690ac28b058fd95f23d758743595c741"
             ],
-            "version": "==5.6.1"
+            "version": "==5.6.3"
         },
         "iniconfig": {
             "hashes": [
@@ -176,6 +183,14 @@
                 "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"
             ],
             "version": "==0.6.1"
+        },
+        "mixer": {
+            "hashes": [
+                "sha256:6f842fdd10952355120c50217961da37d91a661fe7996ee117b43d050344416e",
+                "sha256:9acec419f11c9df286493910dbabc72c70d6c7c46648fa8c8c89d975af05e860"
+            ],
+            "index": "pypi",
+            "version": "==7.1.2"
         },
         "packaging": {
             "hashes": [

@@ -20,65 +20,73 @@ def user_client(django_user_model):
     return created_user
 
 
-@pytest.mark.django_db
 def test_new_user(user_client):
     assert User.objects.count() == 1
 
 
-@pytest.mark.django_db
-def test_learing_goal_factory():
+def test_learning_goal_factory():
     learning_goal = LearningGoalFactory()
-    assert learning_goal is not None
-    assert learning_goal.name != ""
-    assert learning_goal.user is not None
+    single_lg_db = LearningGoal.objects.filter(name=learning_goal.name)
+    assert single_lg_db.exists()
+
+
+def test_multi_learning_goals():
+    LearningGoalFactory()
+    LearningGoalFactory()
+    assert len(LearningGoal.objects.all()) == 2
 
 
 def test_has_learning_goal_name():
     name = "My Goal"
-    learning_goal = LearningGoalFactory(name=name)
-    assert learning_goal.name == name
+    LearningGoalFactory(name=name)
+    assert LearningGoal.objects.filter(name=name).exists()
 
 
 def test_has_learning_goal_user(user_client):
     user = user_client
-    learning_goal = LearningGoalFactory(user=user)
-    assert learning_goal.user == user
+    LearningGoalFactory(user=user)
+    assert LearningGoal.objects.filter(user=user).exists()
 
 
 def test_learning_goal_str():
     learning_goal = LearningGoalFactory()
-    assert str(learning_goal) == learning_goal.name
+    from_db = LearningGoal.objects.get(name=learning_goal.name)
+    assert str(from_db) == learning_goal.name
 
 
 def test_task_factory():
     task = SingleTaskFactory()
-    assert task.completed is not None
-    assert task.text != ""
-    assert task.learninggoal is not None
+    task_from_db = SingleTask.objects.get(text=task.text)
+    assert task_from_db.completed is not None
+    assert task_from_db.learninggoal is not None
 
 
 def test_has_task_text():
     text = "My Task"
-    task = SingleTaskFactory(text=text)
-    assert task.text == text
+    SingleTaskFactory(text=text)
+    task_from_db = SingleTask.objects.filter(text=text)
+    assert task_from_db.exists()
 
 
 def test_has_task_learning_goal():
     learning_goal = LearningGoalFactory()
-    task = SingleTaskFactory(learninggoal=learning_goal)
-    assert task.learninggoal == learning_goal
+    SingleTaskFactory(learninggoal=learning_goal)
+    task_from_db = SingleTask.objects.filter(learninggoal=learning_goal)
+    assert task_from_db.exists()
 
 
 def test_task_str():
-    task = SingleTaskFactory()
-    assert str(task) == task.text
+    text = "My Task"
+    SingleTaskFactory(text=text)
+    task_from_db = SingleTask.objects.get(text=text)
+    assert str(task_from_db) == text
 
 
 def test_task_ordering():
     learning_goal = LearningGoalFactory()
-    task_1 = SingleTaskFactory(completed=False, learninggoal=learning_goal)
-    task_2 = SingleTaskFactory(completed=True, learninggoal=learning_goal)
-    task_3 = SingleTaskFactory(completed=False, learninggoal=learning_goal)
+    task_1 = SingleTaskFactory(completed=True, learninggoal=learning_goal)
+    task_2 = SingleTaskFactory(completed=False, learninggoal=learning_goal)
+    task_3 = SingleTaskFactory(completed=True, learninggoal=learning_goal)
     learning_goals_tasks = LearningGoal.objects.get(
         name=learning_goal.name).tasks.all()
     assert list(learning_goals_tasks) == [task_1, task_3, task_2]

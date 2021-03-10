@@ -33,4 +33,4 @@ class SingleTask(models.Model):
         return self.text
 
     class Meta:
-        ordering = ['completed']
+        ordering = ['-completed']

@@ -75,6 +75,8 @@ class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def get_success_url(self, **kwargs):         
         return reverse_lazy('dashboard')
+
+        
 @login_required(login_url='login')
 def dashboard(request):
     template_name = 'to_do_manager/dashboard.html'

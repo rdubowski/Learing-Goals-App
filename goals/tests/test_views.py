@@ -29,6 +29,7 @@ from goals.tests.factories import (
 
 pytestmark = pytest.mark.django_db
 
+
 @pytest.fixture
 def user_client(django_user_model):
     """
@@ -46,60 +47,3 @@ def test_welcome_page_view_unauth(rf):
     response = welcome_screen(request)
     assert response.status_code == 200
 
-# def test_welcome_page_view_auth(self):
-#     url = reverse("welcome_screen")
-#     user = self.make_user()
-    
-#     with self.login(user):
-#             response = self.get(url)
-#             self.response_302(response)
-
-#     def test_register_page_view_unauth(self):
-#         url = reverse("register")
-#         self.get_check_200(url)
-    
-    
-#     def test_register_page_view_auth(self):
-#         url = reverse("register")
-#         user = self.make_user()
-        
-#         with self.login(user):
-#                 response = self.get(url)
-#                 self.response_302(response)
-
-#     # def test_post(self):
-#     #     url = reverse("register")
-#     #     data = {
-#     #         "username": "user_test_123", 
-#     #         "email": "uuser_test@email.com", 
-#     #         "password1":"hassword123",
-#     #         "password2":"hassword123"
-            
-#     #     }
-#     #     self.post(
-#     #         url_name=url,
-#     #         follow=True,
-#     #         data=data,
-#     #         format="text/html"
-#     #     )
-#     #     self.response_302()
-# class TestLoginPageView(TestCase):
-#     def test_login_page_view_unauth(self):
-#         url = reverse("login")
-#         self.get_check_200(url)
-#         self.assertLoginRequired('my-restricted-url')
-
-    
-#     def test_login_page_view_auth(self):
-#         url = reverse("login")
-#         user = self.make_user()
-        
-#         with self.login(user):
-#                 response = self.get(url)
-#                 self.response_302(response)
-
-
-# class TestDashboardView(TestCase):
-#     def test_unauthenticated_access(self):
-#         url = reverse('dashboard')
-#         self.assertLoginRequired('/dashboard/')

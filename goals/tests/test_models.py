@@ -1,5 +1,5 @@
 import pytest
-from goals.models import Profile, LearningGoal, SingleTask
+from goals.models import LearningGoal, SingleTask
 from goals.tests.factories import (
     LearningGoalFactory,
     SingleTaskFactory,
@@ -8,8 +8,6 @@ from goals.tests.factories import (
 from django.contrib.auth.models import User
 
 pytestmark = pytest.mark.django_db
-
-import pytest
 
 
 @pytest.fixture
@@ -25,7 +23,6 @@ def user_client(django_user_model):
 @pytest.mark.django_db
 def test_new_user(user_client):
     assert User.objects.count() == 1
-
 
 
 @pytest.mark.django_db

@@ -26,5 +26,6 @@
         </ul>
     </div>
     <span class="hello-msg mr-4">Hello, {{ request.user }}</span>
+    <span><a class="hello-msg logout " href="{% url 'update_profile' request.user.pk %}">Update profile</a></span>
     <span><a class="hello-msg logout " href="{% url 'logout' %}">Logout</a></span>
 </nav>

@@ -15,11 +15,12 @@ def profile(sender, instance, created, **kwargs):
 
 
 def learning_goal_update_on_singletask(sender, instance, created, **kwargs):
-        instance.learninggoal.save()
+    instance.learninggoal.save()
+
 
 def learning_goal_delete_on_singletask(sender, instance, **kwargs):
-        instance.learninggoal.save()
-    
+    instance.learninggoal.save()
+
 
 post_save.connect(profile, sender=User)
 post_save.connect(learning_goal_update_on_singletask, sender=SingleTask)

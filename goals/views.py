@@ -8,6 +8,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
+from django.views.generic import UpdateView
+from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.urls import reverse_lazy
 
 
 def welcome_screen(request):
@@ -29,10 +33,11 @@ def register_page(request):
                 form.save()
                 username = form.cleaned_data.get('username')
 
-                messages.success(request, 'Account was created for ' + username)
+                messages.success(request, 'Account was created for '+username)
 
                 return redirect('login')
-
+            else:
+                messages.info(request, 'Username OR password is incorrect')
         context = {'form': form}
         return render(request, 'to_do_manager/register.html', context)
 
@@ -59,6 +64,17 @@ def logout_page(request):
     return redirect('login')
 
 
+class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = User
+    template_name = 'to_do_manager/update_profile.html'
+    form_class = CreateUserForm
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.pk == self.request.user.pk
+
+    def get_success_url(self, **kwargs):         
+        return reverse_lazy('dashboard')
 @login_required(login_url='login')
 def dashboard(request):
     template_name = 'to_do_manager/dashboard.html'

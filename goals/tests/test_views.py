@@ -21,7 +21,6 @@ from goals.views import (
     task_delete
 )
 from django.contrib.auth.models import User
-
 from goals.tests.factories import (
     UserFactory, 
     LearningGoalFactory,

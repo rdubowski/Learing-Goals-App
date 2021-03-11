@@ -82,6 +82,11 @@ def test_task_str():
     assert str(task_from_db) == text
 
 
+def test_task_not_completed():
+    SingleTaskFactory()
+    task_from_db = SingleTask.objects.get(pk=1)
+    assert not task_from_db.completed
+
 def test_task_ordering():
     learning_goal = LearningGoalFactory()
     task_1 = SingleTaskFactory(completed=True, learninggoal=learning_goal)

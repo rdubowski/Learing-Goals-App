@@ -63,7 +63,7 @@ def logout_page(request):
     logout(request)
     return redirect('login')
 
-
+ 
 @login_required(login_url='login')
 def dashboard(request):
     template_name = 'to_do_manager/dashboard.html'
@@ -148,7 +148,7 @@ def learning_goal_tasks(request, pk):
             return JsonResponse({'task': model_to_dict(new_task)}, status=200)
         else:
             return redirect('task_list_url')
-    else:
+    elif request.method == "GET":
         form = SingleTaskForm()
         tasks = learning_goal.tasks.all()
         context = {'form': form,

@@ -1,6 +1,7 @@
-from django.urls import path
-from . import views
 from django.contrib.auth import views as auth_views
+from django.urls import path
+
+from . import views
 
 urlpatterns = [
     path("", views.welcome_screen, name="welcome_screen"),
@@ -8,13 +9,19 @@ urlpatterns = [
     path("logout/", views.logout_page, name="logout"),
     path("register/", views.register_page, name="register"),
     path("dashboard/", views.dashboard, name="dashboard"),
-    path("update_profile/<int:pk>/", views.UpdateUser.as_view(), name="update_profile"),
+    path("update_profile/<int:pk>/",
+         views.UpdateUser.as_view(),
+         name="update_profile"),
     path("dashboard-table/", views.dashboard_table, name="dashboard_table"),
     path("create_goal/", views.create_goal, name="create_goal"),
     path("<int:pk>/delete_goal/", views.delete_goal, name="delete_goal"),
-    path("<int:pk>/change_goal_name/", views.change_goal_name, name="change_goal_name"),
+    path("<int:pk>/change_goal_name/",
+         views.change_goal_name,
+         name="change_goal_name"),
     path("<int:pk>/tasks/", views.learning_goal_tasks, name="task_list_url"),
-    path("tasks/<int:id>/completed/", views.task_complete, name="task_complete_url"),
+    path("tasks/<int:id>/completed/",
+         views.task_complete,
+         name="task_complete_url"),
     path("tasks/<int:id>/delete/", views.task_delete, name="task_delete_url"),
     path(
         "reset_password/",

@@ -1,17 +1,18 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import LearningGoal, SingleTask
-from django.db.models import Prefetch, Count
 from django.contrib import messages
-from .forms import CreateUserForm, CreateGoalForm, SingleTaskForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-from django.forms.models import model_to_dict
-from django.core.paginator import Paginator
-from django.views.generic import UpdateView
-from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
+from django.core.paginator import Paginator
+from django.db.models import Count, Prefetch
+from django.forms.models import model_to_dict
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
+from django.views.generic import UpdateView
+
+from .forms import CreateGoalForm, CreateUserForm, SingleTaskForm
+from .models import LearningGoal, SingleTask
 
 
 def welcome_screen(request):
@@ -32,9 +33,7 @@ def register_page(request):
             if form.is_valid():
                 form.save()
                 username = form.cleaned_data.get("username")
-
-                messages.success(request, "Account was created for " + username)
-
+                messages.success(request, "Account was created for "+username)
                 return redirect("login")
             else:
                 messages.info(request, "Username OR password is incorrect")
@@ -69,7 +68,8 @@ def dashboard(request):
     template_name = "to_do_manager/dashboard.html"
     LearningGoals = (
         request.user.learninggoal_set.prefetch_related(
-            Prefetch("tasks", queryset=SingleTask.objects.filter(completed=False))
+            Prefetch("tasks",
+                     queryset=SingleTask.objects.filter(completed=False))
         )
         .annotate(counter=Count("tasks"))
         .order_by("-updated_at")
@@ -86,7 +86,8 @@ def dashboard_table(request):
     template_name = "to_do_manager/dashboard-table-view.html"
     LearningGoals = (
         request.user.learninggoal_set.prefetch_related(
-            Prefetch("tasks", queryset=SingleTask.objects.filter(completed=False))
+            Prefetch("tasks",
+                     queryset=SingleTask.objects.filter(completed=False))
         )
         .annotate(counter=Count("tasks"))
         .order_by("-updated_at")
@@ -157,7 +158,9 @@ def learning_goal_tasks(request, pk):
     elif request.method == "GET":
         form = SingleTaskForm()
         tasks = learning_goal.tasks.all()
-        context = {"form": form, "tasks": tasks, "learning_goal": learning_goal}
+        context = {"form": form,
+                   "tasks": tasks,
+                   "learning_goal": learning_goal}
         return render(request, "single_goal/create_tasks.html", context)
 
 

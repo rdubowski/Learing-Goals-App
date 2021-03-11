@@ -64,19 +64,6 @@ def logout_page(request):
     return redirect('login')
 
 
-class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = User
-    template_name = 'to_do_manager/update_profile.html'
-    form_class = CreateUserForm
-
-    def test_func(self):
-        obj = self.get_object()
-        return obj.pk == self.request.user.pk
-
-    def get_success_url(self, **kwargs):         
-        return reverse_lazy('dashboard')
-
-        
 @login_required(login_url='login')
 def dashboard(request):
     template_name = 'to_do_manager/dashboard.html'
@@ -185,3 +172,16 @@ def task_delete(request, id):
         task = SingleTask.objects.get(id=id)
         task.delete()
         return JsonResponse({'result': 'ok'}, status=200)
+
+
+class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = User
+    template_name = 'to_do_manager/update_profile.html'
+    form_class = CreateUserForm
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.pk == self.request.user.pk
+
+    def get_success_url(self, **kwargs):         
+        return reverse_lazy('dashboard')

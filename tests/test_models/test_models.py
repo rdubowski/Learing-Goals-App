@@ -1,10 +1,6 @@
 import pytest
 from goals.models import LearningGoal, SingleTask
-from tests.factories import (
-    LearningGoalFactory,
-    SingleTaskFactory,
-    UserFactory
-)
+from tests.factories import LearningGoalFactory, SingleTaskFactory, UserFactory
 from django.contrib.auth.models import User
 
 pytestmark = pytest.mark.django_db
@@ -87,11 +83,11 @@ def test_task_not_completed():
     task_from_db = SingleTask.objects.get(pk=1)
     assert not task_from_db.completed
 
+
 def test_task_ordering():
     learning_goal = LearningGoalFactory()
     task_1 = SingleTaskFactory(completed=True, learninggoal=learning_goal)
     task_2 = SingleTaskFactory(completed=False, learninggoal=learning_goal)
     task_3 = SingleTaskFactory(completed=True, learninggoal=learning_goal)
-    learning_goals_tasks = LearningGoal.objects.get(
-        name=learning_goal.name).tasks.all()
-    assert list(learning_goals_tasks) == [task_1, task_3, task_2]
+    tasks_list = LearningGoal.objects.get(name=learning_goal.name).tasks.all()
+    assert list(tasks_list) == [task_1, task_3, task_2]

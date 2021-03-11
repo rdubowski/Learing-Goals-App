@@ -9,12 +9,13 @@ class UserFactory(factory.django.DjangoModelFactory):
     username = Faker("user_name")
     email = Faker("email")
     password = Faker(
-                "password",
-                length=42,
-                special_chars=True,
-                digits=True,
-                upper_case=True,
-                lower_case=True)
+        "password",
+        length=42,
+        special_chars=True,
+        digits=True,
+        upper_case=True,
+        lower_case=True,
+    )
 
     class Meta:
         model = User
@@ -34,4 +35,3 @@ class SingleTaskFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = SingleTask
-

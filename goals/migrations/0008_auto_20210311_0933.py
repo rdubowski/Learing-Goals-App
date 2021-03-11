@@ -6,15 +6,15 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('goals', '0007_auto_20210110_1810'),
+        ("goals", "0007_auto_20210110_1810"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='singletask',
-            options={'ordering': ['-completed']},
+            name="singletask",
+            options={"ordering": ["-completed"]},
         ),
         migrations.DeleteModel(
-            name='Profile',
+            name="Profile",
         ),
     ]

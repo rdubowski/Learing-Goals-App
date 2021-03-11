@@ -7,29 +7,51 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('goals', '0001_initial'),
+        ("goals", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='LearningGoal',
+            name="LearningGoal",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(blank=True, max_length=40)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(blank=True, max_length=40)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='SingleTask',
+            name="SingleTask",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.CharField(blank=True, max_length=40)),
-                ('completed', models.BooleanField(default=False)),
-                ('learninggoal', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='goals.learninggoal')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("text", models.CharField(blank=True, max_length=40)),
+                ("completed", models.BooleanField(default=False)),
+                (
+                    "learninggoal",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="goals.learninggoal",
+                    ),
+                ),
             ],
         ),
         migrations.DeleteModel(
-            name='Todo',
+            name="Todo",
         ),
     ]

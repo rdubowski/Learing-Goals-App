@@ -7,16 +7,16 @@ from .models import LearningGoal, SingleTask
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ["username", "email", "password1", "password2"]
 
 
 class CreateGoalForm(forms.ModelForm):
     class Meta:
         model = LearningGoal
-        fields = ['name']
+        fields = ["name"]
 
 
 class SingleTaskForm(forms.ModelForm):
     class Meta:
         model = SingleTask
-        fields = ['text']
+        fields = ["text"]

@@ -1,6 +1,6 @@
 import pytest
 from goals.models import LearningGoal, SingleTask
-from goals.tests.factories import (
+from tests.factories import (
     LearningGoalFactory,
     SingleTaskFactory,
     UserFactory

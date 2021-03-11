@@ -47,8 +47,8 @@ def login_page(request):
         return redirect('dashboard')
     else:
         if request.method == 'POST':
-            username = request.POST.get('username')
-            password = request.POST.get('password')
+            username = request.POST['username']
+            password = request.POST['password']
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
@@ -64,7 +64,7 @@ def logout_page(request):
     return redirect('login')
 
  
-@login_required(login_url='login')
+@login_required
 def dashboard(request):
     template_name = 'to_do_manager/dashboard.html'
     LearningGoals = request.user.learninggoal_set.prefetch_related(
@@ -79,7 +79,7 @@ def dashboard(request):
     return render(request, template_name, context)
 
 
-@login_required(login_url='login')
+@login_required
 def dashboard_table(request):
     template_name = 'to_do_manager/dashboard-table-view.html'
     LearningGoals = request.user.learninggoal_set.prefetch_related(
@@ -98,7 +98,7 @@ def dashboard_table(request):
     return render(request, template_name, context)
 
 
-@login_required(login_url='login')
+@login_required
 def create_goal(request):
     if request.method == 'POST':
         form = CreateGoalForm(request.POST)
@@ -114,7 +114,7 @@ def create_goal(request):
     return render(request, 'single_goal/create_goal.html', context)
 
 
-@login_required(login_url='login')
+@login_required
 def delete_goal(request, pk):
     goal = get_object_or_404(LearningGoal, id=pk)
     if request.method == "POST":
@@ -124,7 +124,7 @@ def delete_goal(request, pk):
     return render(request, 'single_goal/delete_goal.html', context)
 
 
-@login_required(login_url='login')
+@login_required
 def change_goal_name(request, pk):
     learning_goal = get_object_or_404(LearningGoal, id=pk)
     form = CreateGoalForm(request.POST or None, instance=learning_goal)
@@ -135,7 +135,7 @@ def change_goal_name(request, pk):
     return render(request, 'single_goal/change_goal_name.html', context)
 
 
-@login_required(login_url='login')
+@login_required
 def learning_goal_tasks(request, pk):
     learning_goal = get_object_or_404(LearningGoal, id=pk)
     if request.method == "POST":
@@ -157,7 +157,7 @@ def learning_goal_tasks(request, pk):
         return render(request, 'single_goal/create_tasks.html', context)
 
 
-@login_required(login_url='login')
+@login_required
 def task_complete(request, id):
     if request.method == "POST":
         task = SingleTask.objects.get(id=id)
@@ -166,7 +166,7 @@ def task_complete(request, id):
         return JsonResponse({'task': model_to_dict(task)}, status=200)
 
 
-@login_required(login_url='login')
+@login_required
 def task_delete(request, id):
     if request.method == "POST":
         task = SingleTask.objects.get(id=id)

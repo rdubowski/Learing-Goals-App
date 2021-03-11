@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse
 from goals.models import LearningGoal, SingleTask
-from goals.tests.factories import (
+from tests.factories import (
     UserFactory,
     LearningGoalFactory,
     SingleTaskFactory

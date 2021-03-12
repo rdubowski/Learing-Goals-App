@@ -39,14 +39,14 @@
                         </div>
                     </div>
                     <div class="d-flex">
-                        <a href="{% url 'task_list_url' pk=learninggoal.pk %}"
+                        <a href="{% url 'task_list' pk=learninggoal.pk %}"
                             class="iconfo ml-auto p-2 mt-2">Update</a>
                     </div>
                 </div>
                 {% endwith %}
                 {% comment %}<li>{{learninggoal.tasks.all.count}}/{{learninggoal.counter}}</li>{% endcomment %}
                 {% else %}
-                <a href="{% url 'task_list_url' pk=learninggoal.pk %}" class="change-link add">Add new goal</a>
+                <a href="{% url 'task_list' pk=learninggoal.pk %}" class="change-link add">Add new goal</a>
                 {% endif %}
             </div>
             <div class="card-footer text-muted">Last updated on: {{ learninggoal.updated_at| date:"d.m" }}</div>

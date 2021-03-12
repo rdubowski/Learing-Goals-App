@@ -65,7 +65,7 @@ def test_has_task_text():
 
 
 def test_has_task_learning_goal():
-    learning_goal = LearningGoalFactory()
+    learning_goal = LearningGoalFactory.create()
     SingleTaskFactory(learninggoal=learning_goal)
     task_from_db = SingleTask.objects.filter(learninggoal=learning_goal)
     assert task_from_db.exists()
@@ -79,8 +79,8 @@ def test_task_str():
 
 
 def test_task_not_completed():
-    SingleTaskFactory()
-    task_from_db = SingleTask.objects.get(pk=1)
+    single_task = SingleTaskFactory()
+    task_from_db = SingleTask.objects.get(pk=single_task.pk)
     assert not task_from_db.completed
 
 

@@ -154,7 +154,7 @@ def learning_goal_tasks(request, pk):
             new_task.save()
             return JsonResponse({"task": model_to_dict(new_task)}, status=200)
         else:
-            return redirect("task_list_url")
+            return redirect("task_list")
     elif request.method == "GET":
         form = SingleTaskForm()
         tasks = learning_goal.tasks.all()

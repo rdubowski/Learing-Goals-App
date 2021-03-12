@@ -107,6 +107,6 @@ def test_update_user_put(client):
         },
     )
     assert resp.status_code == 302
-    assert User.objects.get(pk=1).username == "testingname123"
-    assert User.objects.get(pk=1).email == "testemail@mail.com"
+    assert User.objects.get(pk=user.pk).username == "testingname123"
+    assert User.objects.get(pk=user.pk).email == "testemail@mail.com"
     assert User.objects.count() == 1

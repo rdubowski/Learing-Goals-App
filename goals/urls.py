@@ -18,11 +18,11 @@ urlpatterns = [
     path("<int:pk>/change_goal_name/",
          views.change_goal_name,
          name="change_goal_name"),
-    path("<int:pk>/tasks/", views.learning_goal_tasks, name="task_list_url"),
+    path("<int:pk>/tasks/", views.learning_goal_tasks, name="task_list"),
     path("tasks/<int:id>/completed/",
          views.task_complete,
-         name="task_complete_url"),
-    path("tasks/<int:id>/delete/", views.task_delete, name="task_delete_url"),
+         name="task_complete"),
+    path("tasks/<int:id>/delete/", views.task_delete, name="task_delete"),
     path(
         "reset_password/",
         auth_views.PasswordResetView.as_view(

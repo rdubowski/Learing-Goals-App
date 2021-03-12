@@ -70,7 +70,7 @@ def test_create_goal_view_auth_post(client):
     client.force_login(user)
     resp = client.post(url, data={"name": "learnname"})
     assert resp.status_code == 302
-    assert LearningGoal.objects.filter(name='learnname').exists()
+    assert LearningGoal.objects.filter(name="learnname").exists()
 
 
 def test_create_goal_view_unauth_post(client):
@@ -125,8 +125,7 @@ def test_change_goal_name_view_post_unauth(client):
     url = reverse("change_goal_name", kwargs={"pk": learning_goal.pk})
     resp = client.post(url, data={"name": "learnname"})
     assert resp.status_code == 302
-    assert LearningGoal.objects.get(
-        pk=learning_goal.pk).name == learning_goal.name
+    assert LearningGoal.objects.get(pk=learning_goal.pk).name == learning_goal.name
 
 
 def test_tasks_list_view_auth_get(client):

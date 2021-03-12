@@ -33,7 +33,7 @@ def register_page(request):
             if form.is_valid():
                 form.save()
                 username = form.cleaned_data.get("username")
-                messages.success(request, "Account was created for "+username)
+                messages.success(request, "Account was created for " + username)
                 return redirect("login")
             else:
                 messages.info(request, "Username OR password is incorrect")
@@ -68,8 +68,7 @@ def dashboard(request):
     template_name = "to_do_manager/dashboard.html"
     LearningGoals = (
         request.user.learninggoal_set.prefetch_related(
-            Prefetch("tasks",
-                     queryset=SingleTask.objects.filter(completed=False))
+            Prefetch("tasks", queryset=SingleTask.objects.filter(completed=False))
         )
         .annotate(counter=Count("tasks"))
         .order_by("-updated_at")
@@ -86,8 +85,7 @@ def dashboard_table(request):
     template_name = "to_do_manager/dashboard-table-view.html"
     LearningGoals = (
         request.user.learninggoal_set.prefetch_related(
-            Prefetch("tasks",
-                     queryset=SingleTask.objects.filter(completed=False))
+            Prefetch("tasks", queryset=SingleTask.objects.filter(completed=False))
         )
         .annotate(counter=Count("tasks"))
         .order_by("-updated_at")
@@ -158,9 +156,7 @@ def learning_goal_tasks(request, pk):
     elif request.method == "GET":
         form = SingleTaskForm()
         tasks = learning_goal.tasks.all()
-        context = {"form": form,
-                   "tasks": tasks,
-                   "learning_goal": learning_goal}
+        context = {"form": form, "tasks": tasks, "learning_goal": learning_goal}
         return render(request, "single_goal/create_tasks.html", context)
 
 

@@ -2,6 +2,7 @@
 Live  can be viewed at https://sleepy-springs-26346.herokuapp.com/
 
 A website, which helps manage tasks or learning goals, made using Django. 
+![](https://github.com/rdubowski/gifs/blob/master/learning_goal.gif)
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
